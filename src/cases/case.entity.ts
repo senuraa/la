@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, UpdateDateColumn, CreateDateColumn, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, UpdateDateColumn, CreateDateColumn, ManyToOne, OneToMany, JoinColumn } from "typeorm";
+import { type } from "os";
+import { CityEntity } from "src/cities/city.entity";
 
 @Entity({name: "cases"})
 export class CaseEntity {
@@ -18,8 +20,9 @@ export class CaseEntity {
     @Column({name: "date_sent", nullable: true})
     dateSent: Date;
 
-    @Column({name: "land_registry_id", nullable: true})
-    landRegistryId: number;
+    @ManyToOne(type => CaseEntity)
+    @JoinColumn({name: "id"})
+    city: CityEntity; 
 
     @Column({name: "folio", nullable: true, length: 25})
     folio: string
